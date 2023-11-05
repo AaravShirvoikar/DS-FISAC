@@ -27,49 +27,50 @@ void insertEnd(struct Node** head, int data) {
     }
 }
 
-void removeElement(struct Node** head, int data) {
-    struct Node* current = *head;
-    struct Node* prev = NULL;
-
-    while (current != NULL) {
-        if (current->data == data) {
-            if (prev != NULL) {
-                prev->next = current->next;
-                free(current);
-                current = prev->next;
-            } else {
-                *head = current->next;
-                free(current);
-                current = *head;
-            }
-        } else {
-            prev = current;
-            current = current->next;
-        }
-    }
-}
-
 struct Node* symmetricDifference(struct Node* list1, struct Node* list2) {
     struct Node* result = NULL;
     struct Node* temp1 = list1;
     struct Node* temp2 = list2;
 
     while (temp1 != NULL) {
-        if (!temp2 || temp1->data < temp2->data) {
+        int found = 0;
+        struct Node* temp2 = list2;
+
+        while (temp2 != NULL) {
+            if (temp1->data == temp2->data) {
+                found = 1;
+                break;
+            }
+            temp2 = temp2->next;
+        }
+
+        if (!found) {
             insertEnd(&result, temp1->data);
-        } else if (temp1->data == temp2->data) {
-            removeElement(&list2, temp1->data);
         }
         temp1 = temp1->next;
     }
 
     while (temp2 != NULL) {
-        insertEnd(&result, temp2->data);
+        int found = 0;
+        struct Node* temp1 = list1;
+
+        while (temp1 != NULL) {
+            if (temp2->data == temp1->data) {
+                found = 1;
+                break;
+            }
+            temp1 = temp1->next;
+        }
+
+        if (!found) {
+            insertEnd(&result, temp2->data);
+        }
         temp2 = temp2->next;
     }
 
     return result;
 }
+
 
 void printList(struct Node* head) {
     struct Node* current = head;
