@@ -90,12 +90,12 @@ int main() {
     scanf("%d", &num1);
 
     for (int i = 0; i < num1; i++) {
-        printf("Enter element %d for list1: ", i + 1);
+        printf("Enter element %d of list1: ", i + 1);
         scanf("%d", &value);
         insertEnd(&list1, value);
     }
 
-    printf("Enter the number of elements in list2: ");
+    printf("Enter the number of elements of list2: ");
     scanf("%d", &num2);
 
     for (int i = 0; i < num2; i++) {
